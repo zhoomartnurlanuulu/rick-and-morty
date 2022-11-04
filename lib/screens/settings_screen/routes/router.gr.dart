@@ -80,15 +80,23 @@ class AppRouter extends _i13.RootStackRouter {
       );
     },
     SettingsScreen.name: (routeData) {
+      final args = routeData.argsAs<SettingsScreenArgs>();
       return _i13.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i7.SettingsScreen(),
+        child: _i7.SettingsScreen(
+          key: args.key,
+          google: args.google,
+        ),
       );
     },
     EditRoute.name: (routeData) {
+      final args = routeData.argsAs<EditRouteArgs>();
       return _i13.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i8.EditPage(),
+        child: _i8.EditPage(
+          key: args.key,
+          google: args.google,
+        ),
       );
     },
     SearchRoute.name: (routeData) {
@@ -292,26 +300,70 @@ class CharacterListTitleArgs {
 
 /// generated route for
 /// [_i7.SettingsScreen]
-class SettingsScreen extends _i13.PageRouteInfo<void> {
-  const SettingsScreen()
-      : super(
+class SettingsScreen extends _i13.PageRouteInfo<SettingsScreenArgs> {
+  SettingsScreen({
+    _i14.Key? key,
+    required _i15.GoogleSignInAccount google,
+  }) : super(
           SettingsScreen.name,
           path: '/settings-screen',
+          args: SettingsScreenArgs(
+            key: key,
+            google: google,
+          ),
         );
 
   static const String name = 'SettingsScreen';
 }
 
+class SettingsScreenArgs {
+  const SettingsScreenArgs({
+    this.key,
+    required this.google,
+  });
+
+  final _i14.Key? key;
+
+  final _i15.GoogleSignInAccount google;
+
+  @override
+  String toString() {
+    return 'SettingsScreenArgs{key: $key, google: $google}';
+  }
+}
+
 /// generated route for
 /// [_i8.EditPage]
-class EditRoute extends _i13.PageRouteInfo<void> {
-  const EditRoute()
-      : super(
+class EditRoute extends _i13.PageRouteInfo<EditRouteArgs> {
+  EditRoute({
+    _i14.Key? key,
+    required _i15.GoogleSignInAccount google,
+  }) : super(
           EditRoute.name,
           path: '/edit-page',
+          args: EditRouteArgs(
+            key: key,
+            google: google,
+          ),
         );
 
   static const String name = 'EditRoute';
+}
+
+class EditRouteArgs {
+  const EditRouteArgs({
+    this.key,
+    required this.google,
+  });
+
+  final _i14.Key? key;
+
+  final _i15.GoogleSignInAccount google;
+
+  @override
+  String toString() {
+    return 'EditRouteArgs{key: $key, google: $google}';
+  }
 }
 
 /// generated route for

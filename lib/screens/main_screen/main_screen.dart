@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
       const CharacterScreen(),
       const LocationScreen(),
       const EpisodeScreen(),
-     const  SettingsScreen(),
+       SettingsScreen(google: widget.user,),
     ];
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(

@@ -14,22 +14,16 @@ class CharactersDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const double coverHeight = 300;
-    const double profileHeight = 144;
     return Scaffold(
         body: CustomScrollView(
-      slivers: <Widget>[
+      slivers: [
         SliverAppBar(
           backgroundColor: Theme.of(context).primaryColor,
           primary: true,
           snap: true,
           floating: true,
           pinned: true,
-          expandedHeight: 218,
-          title: Text(
-            result.name,
-            style:
-                TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
-          ),
+          expandedHeight: 254,
           flexibleSpace: FlexibleSpaceBar(
             collapseMode: CollapseMode.parallax,
             centerTitle: true,
@@ -55,28 +49,11 @@ class CharactersDetailPage extends StatelessWidget {
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.topCenter,
-                children: [
-                  CircleAvatar(
-                    radius: 82,
-                    backgroundColor: Theme.of(context).primaryColor,
-                    child: CircleAvatar(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      radius: profileHeight / 2,
-                      backgroundImage: NetworkImage(result.image),
-                    ),
-                  ),
-                ],
-              ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 24,
-                    ),
+                    const SizedBox(),
                     Text(
                       result.name,
                       textAlign: TextAlign.center,
@@ -133,11 +110,12 @@ class CharactersDetailPage extends StatelessWidget {
                             Text(
                               result.species,
                               style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.color,
-                                  fontSize: 14),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.color,
+                                fontSize: 14,
+                              ),
                             )
                           ],
                         ),
@@ -162,11 +140,12 @@ class CharactersDetailPage extends StatelessWidget {
                               Text(
                                 result.origin.name,
                                 style: TextStyle(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.color),
-                              )
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.color,
+                                ),
+                              ),
                             ],
                           ),
                           Icon(

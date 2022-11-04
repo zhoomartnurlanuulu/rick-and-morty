@@ -3,16 +3,22 @@
 import 'dart:io' show File;
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rick_and_morty/data/api/google_api.dart';
 import 'package:rick_and_morty/data/repositories/user_repository.dart';
-
 import 'package:rick_and_morty/screens/settings_screen/routes/router.gr.dart';
 
 import '../../data/models/user.dart';
 
 class EditPage extends StatefulWidget {
-  const EditPage({super.key});
+  final GoogleSignInAccount google;
+  const EditPage({
+    Key? key,
+    required this.google,
+  }) : super(key: key);
 
   @override
   State<EditPage> createState() => _EditPageState();
@@ -24,6 +30,7 @@ class _EditPageState extends State<EditPage> {
   File? _image;
   @override
   Widget build(BuildContext context) {
+    final photo = widget.google.photoUrl;
     late User user = UserRepo.getUser();
     return Scaffold(
       appBar: AppBar(
@@ -41,88 +48,65 @@ class _EditPageState extends State<EditPage> {
           )),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(children: [
-          Center(
-              child: CircleAvatar(
-            backgroundColor: Theme.of(context).primaryColor,
-            radius: 100,
-            child: ClipOval(
-                child: Container(
-              height: 180,
-              width: 180,
-              decoration: BoxDecoration(
-                  image: imageFile != null
-                      ? DecorationImage(
-                          image: AssetImage(user.image.toString()),
-                          fit: BoxFit.cover)
-                      : DecorationImage(
-                          image: FileImage(File(user.image.toString())),
-                          fit: BoxFit.fill)),
+        child: Column(
+          children: [
+            Center(
+                child: CircleAvatar(
+              backgroundColor: Theme.of(context).primaryColor,
+              backgroundImage: CachedNetworkImageProvider(photo!),
+              radius: 100,
             )),
-          )),
-          const SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: TextButton(
-                onPressed: () async {
-                  _image !=
-                      await _picker.pickImage(source: ImageSource.gallery);
-                  imageFile != File(_image!.path);
-                  setState(() => user = user.copy(image: _image?.path));
-                  context.router.pop();
-                },
-                child: const Text(
-                  'Изменить фото',
-                  style: TextStyle(color: Color(0xff22A2BD)),
-                )),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          Row(
-            children: const [
-              Text(
-                'Профиль',
-                style: TextStyle(color: Colors.grey),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 24,
-          ),
-          InkWell(
-            onTap: () async {
-              await context.router.push(const ChangeRoute());
-              setState(() {});
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Изменить ФИО',
-                      style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyMedium?.color),
-                    ),
-                    Text('${user.name} ${user.lastName}',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.grey)),
-                  ],
+            const SizedBox(
+              height: 20,
+            ),
+            const Center(),
+            const SizedBox(
+              height: 40,
+            ),
+            Row(
+              children: const [
+                Text(
+                  'Профиль',
+                  style: TextStyle(color: Colors.grey),
                 ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
-                )
               ],
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          InkWell(
+            const SizedBox(
+              height: 24,
+            ),
+            InkWell(
+              onTap: () async {
+                await context.router.push(const ChangeRoute());
+                setState(() {});
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Изменить ФИО',
+                        style: TextStyle(
+                            color:
+                                Theme.of(context).textTheme.bodyMedium?.color),
+                      ),
+                      Text('${user.name} ${user.lastName}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colors.grey)),
+                    ],
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            InkWell(
               onTap: () async {
                 await context.router.push(const LoginRoute());
               },
@@ -148,8 +132,39 @@ class _EditPageState extends State<EditPage> {
                     color: Theme.of(context).textTheme.bodyMedium?.color,
                   ),
                 ],
-              ))
-        ]),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  width: 220,
+                  child: ElevatedButton.icon(
+                      onPressed: () async {
+                        await GoogleSignInApi.logOut();
+                        context.router.push(const SignInScreen());
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).primaryColor,
+                          elevation: 0.5),
+                      icon: const Icon(
+                        Icons.logout,
+                        color: Colors.black,
+                      ),
+                      label: Text(
+                        'Выход с приложении',
+                        style: TextStyle(
+                            color:
+                                Theme.of(context).textTheme.bodyMedium!.color),
+                      )),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
