@@ -9,7 +9,7 @@ import 'package:rick_and_morty/screens/settings_screen/editing_page.dart';
 import 'package:rick_and_morty/screens/settings_screen/settings_screen.dart';
 import 'package:rick_and_morty/screens/settings_screen/widget/changer_page.dart';
 import 'package:rick_and_morty/screens/settings_screen/widget/login_page.dart';
-import 'package:rick_and_morty/screens/singin_page/singin_screen.dart';
+import 'package:rick_and_morty/screens/signin_page/singin_screen.dart';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:auto_route/annotations.dart';

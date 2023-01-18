@@ -39,7 +39,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Всего персонажей:826".toUpperCase(),
+                Text("Всего персонажей:${_currentCharacters!.info.count}".toUpperCase(),
                     style: AppTexStyle.appbartext),
                 IconButton(
                   icon: isList

@@ -23,7 +23,7 @@ import '../../episode_screen/episode_screen.dart' as _i3;
 import '../../location_screen/location_screen.dart' as _i4;
 import '../../main_screen/main_screen.dart' as _i2;
 import '../../search_screen/widgets/search_page.dart' as _i9;
-import '../../singin_page/singin_screen.dart' as _i1;
+import '../../signin_page/singin_screen.dart' as _i1;
 import '../editing_page.dart' as _i8;
 import '../settings_screen.dart' as _i7;
 import '../widget/changer_page.dart' as _i10;
