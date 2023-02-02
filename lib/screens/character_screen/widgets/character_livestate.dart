@@ -8,22 +8,18 @@ class CharacterStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          liveState == LiveState.alive
-              ? 'Alive'
+    return Text(
+      liveState == LiveState.alive
+          ? 'Alive'
+          : liveState == LiveState.dead
+              ? 'Dead'
+              : 'Unknown',
+      style: TextStyle(
+          color: liveState == LiveState.alive
+              ? Colors.green
               : liveState == LiveState.dead
-                  ? 'Dead'
-                  : 'Unknown',
-          style: TextStyle(
-              color: liveState == LiveState.alive
-                  ? Colors.green
-                  : liveState == LiveState.dead
-                      ? Colors.red
-                      : Colors.orange),
-        )
-      ],
+                  ? Colors.red
+                  : Colors.orange),
     );
   }
-}
+} 

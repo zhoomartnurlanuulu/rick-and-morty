@@ -55,43 +55,37 @@ class _CharacterScreenState extends State<CharacterScreen> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: state.maybeWhen(
-              orElse: () {
-                return _customListView(_currentResults);
-              },
-              loading: (models) {
-                return const Center(
-                  child: CircularProgressIndicator.adaptive(),
-                );
-              },
-              success: (allPage, isLoading, charactersSuccess) {
-                isLoading = true;
-                _currentResults = charactersSuccess;
-                return _currentResults.isNotEmpty
-                    ? isList
-                        ? _customListView(_currentResults)
-                        : _customGridView(_currentResults)
-                    : const SizedBox();
-              },
-              error: () {
-                return Center(
-                  child: Column(
-                    children: [
-                      Image.asset('assets/images/nothing.png'),
-                      Text(
-                        'Персонаж с таким именем не найден',
-                        style: AppTexStyle.colorgrey,
-                      )
-                    ],
-                  ),
-                );
-              },
+      body: state.maybeWhen(
+        orElse: () {
+          return _customListView(_currentResults);
+        },
+        loading: (models) {
+          return const Center(
+            child: CircularProgressIndicator.adaptive(),
+          );
+        },
+        success: (allPage, isLoading, charactersSuccess) {
+          isLoading = true;
+          _currentResults = charactersSuccess;
+          return _currentResults.isNotEmpty
+              ? isList
+                  ? _customListView(_currentResults)
+                  : _customGridView(_currentResults)
+              : const SizedBox();
+        },
+        error: () {
+          return Center(
+            child: Column(
+              children: [
+                Image.asset('assets/images/nothing.png'),
+                Text(
+                  'Персонаж с таким именем не найден',
+                  style: AppTexStyle.colorgrey,
+                )
+              ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
